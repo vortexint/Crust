@@ -2,7 +2,7 @@
 #![no_main]
 
 use core::panic::PanicInfo;
-use core::arch::asm;
+// use core::arch::asm;
 
 static HELLO: &[u8] = b"Hello World!";
 
