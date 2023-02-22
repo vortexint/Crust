@@ -7,7 +7,7 @@ The project is implemented as a library, which can be linked with assembly sourc
 ## Hacking Rust
 
 Some different methods are used in order to enable the usage
-of multiple languages in combination with Rust. Rust Nightly is needed.
+of multiple languages in combination with Rust. Nightly version is needed.
 
 ### The x86_64-unknown-none LLVM target
 
