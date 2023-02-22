@@ -9,7 +9,7 @@ grub_cfg := src/$(arch)/grub.cfg
 
 .PHONY: all clean run iso kernel
 
-all: $(kernel)
+all: $(kernel) iso
 
 clean:
 	@cargo clean
@@ -28,9 +28,11 @@ $(iso): $(grub_cfg)
 	@grub-mkrescue --output=$(iso) build/isofiles
 
 kernel:
+# Compile Rust source
 	@cargo build
+# Compile assembly
+	@nasm -f elf64 multiboot_header.asm
+# link it
 
 
-$(kernel): kernel 
-	echo not implemented
-
+$(kernel): kernel
