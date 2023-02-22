@@ -1,0 +1,9 @@
+[package]
+name = "vortex_os"
+description = "Memory-safery focused Operating System"
+homepage = "vortex-dev.com/vortexOS"
+authors = ["Igor Alexey <igor@vortex-dev.com>"]
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
