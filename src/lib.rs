@@ -8,7 +8,7 @@ use core::panic::PanicInfo;
 
 /* Entry point function */
 #[no_mangle]
-pub extern "C" fn _start() -> ! {
+pub extern "C" fn os_main() -> ! {
     loop {}
 }
 
