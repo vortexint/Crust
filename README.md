@@ -18,7 +18,7 @@ Since no useable code has been loaded prior to the kernel in a bare metal enviro
 ### 1.3 Compiling the Kernel as a static library
 When compiling the kernel as a static library, we still need some form of identifying which function is the entry point, so the rest of the source can be executed in sequence. To do this, we must avoid avoid a certain Rust feature called [Name mangling](https://en.wikipedia.org/wiki/Name_mangling) which modifies the names of functions to some incomprehensible gibberish. Thankfully, the `#[no_mangle]` attribute is used to define native functions such as the entry point `os_main()`, allowing them to be added as external functions in our assembly initialization source. 
 
-From the compiler perspective, it doesn't matter if the main function is in a static library or a standalone object file, the compiler can produce the kernel executable from object files regardless of their origin. 
+> From the compiler perspective, it doesn't matter if the main function is in a static library or a standalone object file, the compiler can produce the kernel executable from object files regardless of their origin. 
 
 ### 1.4 The bootloader
 By itself, the kernel is not capable of booting. A bootloader is necessary for the kernel to be able to boot. GRUB 2 is ideal for this purpose, and it can be configured to load the kernel image and set up a minimal environment for it to run. Additionally, many Linux distributions include GRUB 2 as their main bootloader, granting multiboot capabilities with different Operating Systems.
