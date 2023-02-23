@@ -13,7 +13,7 @@ asm_obj := $(patsubst src/$(arch)/%.asm, \
 
 .PHONY: all clean run iso kernel
 
-all: $(kernel)
+all: $(kernel) iso
 
 clean:
 	@rm -r build || true
