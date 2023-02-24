@@ -4,6 +4,8 @@ A memory-safe operating system built to maximize the potential of modern computi
 
 The project is implemented as a library, which can be linked with assembly source to produce a final kernel binary. The binary is then packed with the [GRUB 2 bootloader](https://www.gnu.org/software/grub/), allowing Vortex OS to be compatible with multiple boot environments; This design choice allows for flexibility and customization in the development process.
 
+# Rundown
+
 ## 1. Hacking Rust
 
 At the heart of Vortex OS lies a unique approach to using multiple languages in combination with Rust. To make the most out of the language, Vortex OS requires the use of the nightly version of Rust.
