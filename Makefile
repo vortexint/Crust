@@ -1,5 +1,5 @@
 # My sincere apologies to anyone reading this Makefile
-# Packages: rust, qemu-system-x86, nasm, mtools, xorriso...
+# Packages: rust, qemu-system-x86, binutils, libc6-dev-i386, nasm, mtools, xorriso...
 
 arch ?= x86_64
 kernel := build/kernel-$(arch).bin
@@ -7,9 +7,12 @@ iso := build/vortex-os-$(arch).iso
 
 linker_script := src/platform/$(arch)/link.ld
 grub_cfg := src/platform/grub/.
+
 asm_src := $(wildcard src/platform/$(arch)/*.asm)
-asm_obj := $(patsubst src/platform/$(arch)/%.asm, \
-	build/$(arch)/obj/%.o, $(asm_src))
+asm_obj := $(patsubst src/platform/$(arch)/%.asm, build/$(arch)/obj/%.o, $(asm_src))
+
+c_src := $(wildcard *.c)
+c_obj := $(patsubst %.c, build/$(arch)/obj/%.o, $(c_src))
 
 .PHONY: all clean run iso kernel
 
@@ -32,13 +35,15 @@ $(iso): $(kernel) $(grub_cfg)
 	@grub-mkrescue --output=$(iso) build/isofiles
 
 kernel:
-# Compile rust source
-	@cargo build
-	@mkdir -p build/$(arch)/obj
 # Compile assembly
 	@for file in src/platform/$(arch)/*.asm; do \
 		nasm -f elf64 $$file -o build/$(arch)/obj/`basename $$file .asm`.o; \
 	done
+# Compile C source
+
+# Compile rust source
+	@cargo build
+	@mkdir -p build/$(arch)/obj
 
 
 $(kernel): kernel $(asm_obj)

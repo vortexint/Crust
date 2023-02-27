@@ -1,0 +1,6 @@
+
+# TODO:
+
+project(vortex_os C ASM)
+# Rust is not currently supported out of the box by CMake
+# but this can still be improvised later...
