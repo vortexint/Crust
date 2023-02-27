@@ -5,15 +5,15 @@ arch ?= x86_64
 kernel := build/kernel-$(arch).bin
 iso := build/vortex-os-$(arch).iso
 
-linker_script := src/$(arch)/link.ld
-grub_cfg := src/grub/.
-asm_src := $(wildcard src/$(arch)/*.asm)
-asm_obj := $(patsubst src/$(arch)/%.asm, \
+linker_script := src/platform/$(arch)/link.ld
+grub_cfg := src/platform/grub/.
+asm_src := $(wildcard src/platform/$(arch)/*.asm)
+asm_obj := $(patsubst src/platform/$(arch)/%.asm, \
 	build/$(arch)/obj/%.o, $(asm_src))
 
 .PHONY: all clean run iso kernel
 
-all: $(kernel) iso
+all: $(kernel) iso run
 
 clean:
 	@rm -r build || true
@@ -36,12 +36,12 @@ kernel:
 	@cargo build
 	@mkdir -p build/$(arch)/obj
 # Compile assembly
-	@for file in src/$(arch)/*.asm; do \
+	@for file in src/platform/$(arch)/*.asm; do \
 		nasm -f elf64 $$file -o build/$(arch)/obj/`basename $$file .asm`.o; \
 	done
 
 
 $(kernel): kernel $(asm_obj)
 # link, create kernel.bin
-	@ld -n --gc-sections -T src/$(arch)/link.ld -o build/kernel.bin \
+	@ld -n --gc-sections -T src/platform/$(arch)/link.ld -o build/kernel.bin \
 		$(asm_obj) target/buildspec/debug/libvortex_os.a
