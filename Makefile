@@ -1,12 +1,12 @@
 # My sincere apologies to anyone reading this Makefile
-# Packages: rust, qemu, nasm, mtools, xorriso...
+# Packages: rust, qemu-system-x86, nasm, mtools, xorriso...
 
 arch ?= x86_64
 kernel := build/kernel-$(arch).bin
 iso := build/vortex-os-$(arch).iso
 
 linker_script := src/$(arch)/link.ld
-grub_cfg := src/$(arch)/grub.cfg
+grub_cfg := src/grub/.
 asm_src := $(wildcard src/$(arch)/*.asm)
 asm_obj := $(patsubst src/$(arch)/%.asm, \
 	build/$(arch)/obj/%.o, $(asm_src))
@@ -28,7 +28,7 @@ iso: $(iso)
 $(iso): $(kernel) $(grub_cfg)
 	@mkdir -p build/isofiles/boot/grub
 	@cp build/kernel.bin build/isofiles/boot/kernel.bin
-	@cp $(grub_cfg) build/isofiles/boot/grub
+	@cp -a $(grub_cfg) build/isofiles/boot/grub
 	@grub-mkrescue --output=$(iso) build/isofiles
 
 kernel:

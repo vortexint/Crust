@@ -4,21 +4,21 @@
 use core::panic::PanicInfo;
 // use core::arch::asm;
 
-static CAKE_RECIPE: &[u8] = b"Welcome!";
+static MESSAGE: &[u8] = b"Welcome to Vortex OS!";
 
 /* Entry point function */
 #[no_mangle]
 pub extern "C" fn os_main() -> ! {
     let vga_buffer = 0xb8000 as *mut u8;
 
-    for (i, &byte) in CAKE_RECIPE.iter().enumerate() {
+    for (i, &byte) in MESSAGE.iter().enumerate() {
         unsafe {
-            if i % 2 == 0 {
+            if i < 11 {
                 *vga_buffer.offset(i as isize * 2) = byte;
                 *vga_buffer.offset(i as isize * 2 + 1) = 0xf;
             } else {
                 *vga_buffer.offset(i as isize * 2) = byte;
-                *vga_buffer.offset(i as isize * 2 + 1) = 0x4;
+                *vga_buffer.offset(i as isize * 2 + 1) = 0x2;
             }
         }
     }
