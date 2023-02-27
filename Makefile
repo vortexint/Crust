@@ -11,9 +11,8 @@ grub_cfg := src/platform/grub/.
 asm_src := $(wildcard src/platform/$(arch)/*.asm)
 asm_obj := $(patsubst src/platform/$(arch)/%.asm, build/$(arch)/obj/%.o, $(asm_src))
 
-c_src := $(wildcard *.c)
-c_obj := $(patsubst %.c, build/$(arch)/obj/%.o, $(c_src))
-
+c_src := $(shell find src/ -name '*.c')
+c_obj := $(patsubst src/%.c, build/$(arch)/obj/%.o, $(c_src))
 .PHONY: all clean run iso kernel
 
 all: $(kernel) iso run
@@ -45,8 +44,11 @@ kernel:
 	@cargo build
 	@mkdir -p build/$(arch)/obj
 
-
 $(kernel): kernel $(asm_obj)
 # link, create kernel.bin
 	@ld -n --gc-sections -T src/platform/$(arch)/link.ld -o build/kernel.bin \
-		$(asm_obj) target/buildspec/debug/libvortex_os.a
+		$(asm_obj) $(c_src) target/buildspec/debug/libvortex_os.a
+
+sourcefiles:
+	@printf "ASM:\n src:$(asm_src)\n obj: $(asm_obj)\n\
+				C:\n src: $(c_src)\n obj: $(c_obj)" > sourcefiles.txt

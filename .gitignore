@@ -17,3 +17,6 @@ Cargo.lock
 
 # OS Builds
 *.iso
+
+# source files listing for verification
+sourcefiles.txt
