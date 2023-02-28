@@ -1,5 +1,5 @@
 [package]
-name = "vortex_os"
+name = "vortex_os_rust"
 description = "Memory-safety focused Operating System"
 homepage = "vortex-dev.com/vortexOS"
 authors = ["Igor Alexey <igor@vortex-dev.com>"]
