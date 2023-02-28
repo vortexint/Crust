@@ -15,9 +15,11 @@ target_include_directories(vortex_os PUBLIC
 )
 
 target_sources(vortex_os PUBLIC
+# Assembly
     ${src}/platform/x86_64/boot.asm
     ${src}/platform/x86_64/long-mode-init.asm
     ${src}/platform/x86_64/multiboot-header.asm
+# C
     ${src}/main.c
     ${src}/graphics/vga_text.c
 )
