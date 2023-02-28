@@ -1,7 +1,7 @@
 # My sincere apologies to anyone reading this Makefile
 # Packages: rust, qemu-system-x86, binutils, libc6-dev-i386, nasm, mtools, xorriso...
 
-GCCPARAMS = -m32 -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore
+GCCPARAMS = -m64 -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore
 arch ?= x86_64
 kernel := build/kernel-$(arch).bin
 iso := build/vortex-os-$(arch).iso
