@@ -3,10 +3,16 @@
 
 use core::panic::PanicInfo;
 
+extern "C" {
+    fn cmain();
+}
+
 /* Entry point function */
 #[no_mangle]
 pub extern "C" fn os_main() -> ! {
-
+    unsafe {
+        cmain();
+    }
     loop {
     }
 }

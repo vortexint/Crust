@@ -1,7 +1,3 @@
-#if defined(__x86_64__)
-#elif defined(__ARM__)
-#endif
-
 #define BUFFER_HEIGHT 25
 #define BUFFER_WIDTH 80
 
@@ -47,8 +43,7 @@ typedef struct {
     Buffer* buffer;
 } Writer;
 
-
-void Writer_write_byte(Writer* writer, unsigned char byte) {
+void write_byte(Writer* writer, unsigned char byte) {
     if (byte == '\n') {
         writer->column_position = 0;
     } else {
@@ -66,13 +61,13 @@ void Writer_write_byte(Writer* writer, unsigned char byte) {
     }
 }
 
-void Writer_write_string(Writer* writer, const char* string) {
+void write_string(Writer* writer, const char* string) {
     for (int i = 0; string[i] != '\0'; i++) {
         unsigned char byte = string[i];
         if (byte >= 0x20 && byte <= 0x7e || byte == '\n') {
-            Writer_write_byte(writer, byte);
+            write_byte(writer, byte);
         } else {
-            Writer_write_byte(writer, 0xfe);
+            write_byte(writer, 0xfe);
         }
     }
 }
