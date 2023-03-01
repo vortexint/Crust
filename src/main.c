@@ -3,6 +3,8 @@
 
 static bool vga_output = true;
 
+#define __OS_VERSION__ "0.1"
+
 void c_main() {
     Writer writer;
     writer.buffer = (Buffer*) 0xb8000;
@@ -14,6 +16,8 @@ void c_main() {
     writer.color_code = ColorCode_new(White, Black);
     write_string(&writer, "!");
     newline(&writer);
-    write_string(&writer, "Vortex OS");
-    //clear_row(&writer, 25);
+    write_string(&writer, "v");
+    write_string(&writer, __OS_VERSION__);
+    write_string(&writer, " TS: ");
+    write_string(&writer, __TIMESTAMP__);
 }
