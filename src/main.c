@@ -13,4 +13,6 @@ void c_main() {
     write_string(&writer, "Vortex OS");
     writer.color_code = ColorCode_new(White, Black);
     write_string(&writer, "!");
+    newline(&writer);
+    clear_row(&writer, 25);
 }

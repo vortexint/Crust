@@ -42,7 +42,7 @@ typedef struct {
 
 ColorCode ColorCode_new(Color foreground, Color background);
 void clear_row(Writer* writer, unsigned int row);
-void write_newline(Writer* writer);
+void newline(Writer* writer);
 void write_byte(Writer* writer, unsigned char byte);
 void write_string(Writer* writer, const char* string);
 
