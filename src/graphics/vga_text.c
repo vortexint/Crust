@@ -33,7 +33,7 @@ void write_string(Writer* writer, const char* string) {
     }
 }
 
-void new_line(Writer* writer) {
+void newline(Writer* writer) {
     for (int row = 1; row < BUFFER_HEIGHT; row++) {
         for (int col = 0; col < BUFFER_WIDTH; col++) {
             ScreenChar character = writer->buffer->chars[row][col];
