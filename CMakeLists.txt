@@ -36,13 +36,15 @@ target_compile_options(asm_objs PRIVATE -f elf64)
 # I Wish! We cannot specify build flags for ld here so a custom build step is required.
 
 add_custom_target(VortexOS ALL
-    COMMAND ld -n --gc-sections -T ${src}/platform/x86_64/link.ld -o ${CMAKE_BINARY_DIR}/VortexOS.bin $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs>
+    COMMAND cargo build
+    COMMAND ld -n --gc-sections -T ${src}/platform/x86_64/link.ld -o ${CMAKE_BINARY_DIR}/VortexOS.bin $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs> ${CMAKE_BINARY_DIR}/x86_64/debug/libvortex_os_rust.a
     COMMAND mkdir -p ${CMAKE_BINARY_DIR}/isofiles/boot/grub
     COMMAND cp ${CMAKE_BINARY_DIR}/VortexOS.bin ${CMAKE_BINARY_DIR}/isofiles/boot/VortexOS.bin
     COMMAND cp -a ${src}/platform/grub/. ${CMAKE_BINARY_DIR}/isofiles/boot/grub
     COMMAND grub-mkrescue --output=${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso ${CMAKE_BINARY_DIR}/isofiles
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS c_objs asm_objs
+    BYPRODUCTS ${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso
     COMMENT "Full VortexOS kernel target"
     COMMAND_EXPAND_LISTS
     VERBATIM

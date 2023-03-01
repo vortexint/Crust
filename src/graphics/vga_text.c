@@ -20,7 +20,6 @@ typedef enum {
     White
 } Color;
 
-
 // Can store a single byte of data.
 typedef unsigned char ColorCode;
 
