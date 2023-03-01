@@ -1,46 +1,8 @@
-#define BUFFER_HEIGHT 25
-#define BUFFER_WIDTH 80
-
-typedef enum {
-    Black,
-    Blue,
-    Green,
-    Cyan,
-    Red,
-    Magenta,
-    Brown,
-    LightGray,
-    DarkGray,
-    LightBlue,
-    LightGreen,
-    LightCyan,
-    LightRed,
-    Pink,
-    Yellow,
-    White
-} Color;
-
-// Can store a single byte of data.
-typedef unsigned char ColorCode;
+#include "./vga_text.h"
 
 ColorCode ColorCode_new(Color foreground, Color background) {
     return (background << 4) | foreground; // if background is 8 bits and foreground is 4 bits
 }
-
-typedef struct {
-    unsigned char ascii_character;
-    ColorCode color_code;
-} ScreenChar;
-
-typedef struct {
-    ScreenChar chars[BUFFER_HEIGHT][BUFFER_WIDTH];
-} Buffer;
-
-typedef struct {
-    unsigned int column_position;
-    ColorCode color_code;
-    Buffer* buffer;
-} Writer;
 
 void write_byte(Writer* writer, unsigned char byte) {
     if (byte == '\n') {
@@ -68,5 +30,33 @@ void write_string(Writer* writer, const char* string) {
         } else {
             write_byte(writer, 0xfe);
         }
+    }
+}
+
+void new_line(Writer* writer) {
+    for (int row = 1; row < BUFFER_HEIGHT; row++) {
+        for (int col = 0; col < BUFFER_WIDTH; col++) {
+            ScreenChar character = writer->buffer->chars[row][col];
+            writer->buffer->chars[row - 1][col] = character;
+        }
+    }
+    clear_row(writer, BUFFER_HEIGHT - 1);
+    writer->column_position = 0;
+}
+
+//void clear_row(Writer* writer, unsigned int row) {
+//    for (int col = 0; col < BUFFER_WIDTH; col++) {
+//        ScreenChar character = {0, writer->color_code};
+//        writer->buffer->chars[row][col] = character;
+//    }
+//}
+
+void clear_row(Writer* writer, unsigned int row) {
+    ScreenChar blank = {
+        .ascii_character = ' ',
+        .color_code = writer->color_code
+    };
+    for (int col = 0; col < BUFFER_WIDTH; col++) {
+        writer->buffer->chars[row][col] = blank;
     }
 }

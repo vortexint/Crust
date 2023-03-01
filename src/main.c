@@ -1,4 +1,7 @@
+#include "std/stdbool.h"
 #include "graphics/vga_text.h"
+
+static bool vga_output = true;
 
 void c_main() {
     Writer writer;
