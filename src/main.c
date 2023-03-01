@@ -7,3 +7,7 @@ void c_main() {
     writer.column_position = 0;
     write_string(&writer, "Hello world\n");
 }
+
+void os_main() {
+    c_main();
+}
