@@ -42,6 +42,7 @@ add_custom_target(VortexOS ALL
     COMMAND cp ${CMAKE_BINARY_DIR}/VortexOS.bin ${CMAKE_BINARY_DIR}/isofiles/boot/VortexOS.bin
     COMMAND cp -a ${src}/platform/grub/. ${CMAKE_BINARY_DIR}/isofiles/boot/grub
     COMMAND grub-mkrescue --output=${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso ${CMAKE_BINARY_DIR}/isofiles
+    COMMAND rm -rf ${CMAKE_BINARY_DIR}/isofiles/
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS c_objs asm_objs
     BYPRODUCTS ${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso
