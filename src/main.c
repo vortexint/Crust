@@ -1,6 +1,8 @@
-#include "std/stdbool.h"
+#include <stdbool.h>
 #include "graphics/vga_text.h"
+#include "bda/bda_utils.h"
 
+#include <stdio.h>
 static bool vga_output = true;
 
 #define __OS_VERSION__ "0.1"
@@ -16,8 +18,23 @@ void c_main() {
     writer.color_code = ColorCode_new(White, Black);
     write_string(&writer, "!");
     newline(&writer);
-    write_string(&writer, "v");
+    write_string(&writer, "VERSION:");
     write_string(&writer, __OS_VERSION__);
-    write_string(&writer, " TS: ");
+    write_string(&writer, " BUILD TS: ");
     write_string(&writer, __TIMESTAMP__);
+    newline(&writer);
+    write_string(&writer, "Video Type: ");
+    switch (get_bios_area_video_type()) {
+    case 0x20:
+        write_string(&writer, "Colour");
+        break;
+    case 0x30:
+        write_string(&writer, "Monochrome");
+        break;
+    default:
+        write_string(&writer, "Unknown");
+        break;
+    }
+    write_string(&writer, "RAM: ");
+    write_string(&writer, 32);
 }

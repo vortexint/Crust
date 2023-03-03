@@ -10,6 +10,7 @@ set(src ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(PUBLIC
     ${CMAKE_SOURCE_DIR}/extern
+    ${src}/std
 )
 
 # Create object files for custom linking step 
@@ -20,6 +21,7 @@ target_sources(c_objs PUBLIC
 # C (gcc)
     ${src}/main.c
     ${src}/graphics/vga_text.c
+    ${src}/bda/bda_utils.c
 )
 
 target_sources(asm_objs PUBLIC
@@ -43,6 +45,7 @@ add_custom_target(VortexOS ALL
     COMMAND cp -a ${src}/platform/grub/. ${CMAKE_BINARY_DIR}/isofiles/boot/grub
     COMMAND grub-mkrescue --output=${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso ${CMAKE_BINARY_DIR}/isofiles
     COMMAND rm -rf ${CMAKE_BINARY_DIR}/isofiles/
+    COMMAND rm -f ${CMAKE_BINARY_DIR}/VortexOS.bin
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS c_objs asm_objs
     BYPRODUCTS ${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso
