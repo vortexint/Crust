@@ -1,0 +1,6 @@
+[submodule "modules/Lua"]
+	path = modules/Lua
+	url = https://github.com/walterschell/Lua.git
+[submodule "modules/picolibc"]
+	path = modules/picolibc
+	url = https://github.com/picolibc/picolibc.git
