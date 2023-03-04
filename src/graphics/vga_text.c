@@ -44,13 +44,6 @@ void newline(Writer* writer) {
     writer->column_position = 0;
 }
 
-//void clear_row(Writer* writer, unsigned int row) {
-//    for (int col = 0; col < BUFFER_WIDTH; col++) {
-//        ScreenChar character = {0, writer->color_code};
-//        writer->buffer->chars[row][col] = character;
-//    }
-//}
-
 void clear_row(Writer* writer, unsigned int row) {
     ScreenChar blank = {
         .ascii_character = ' ',

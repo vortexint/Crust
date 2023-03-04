@@ -4,14 +4,17 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR x86_64)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-project(vortexOS LANGUAGES C ASM_NASM)
-
 set(src ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(PUBLIC
     ${CMAKE_SOURCE_DIR}/extern
     ${src}/std
 )
+
+project(vortexOS LANGUAGES C ASM ASM_NASM) # ASM is required by piclibc
+
+#add_subdirectory(modules/Lua)
+add_subdirectory(modules/picolibc)
 
 # Create object files for custom linking step 
 add_library(c_objs OBJECT) # force GCC to use -c which ignores linking step. 
@@ -32,6 +35,7 @@ target_sources(asm_objs PUBLIC
 )
 
 target_compile_options(c_objs PRIVATE -m64 -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore)
+target_link_libraries(c_objs PRIVATE Picolibc)
 target_compile_options(asm_objs PRIVATE -f elf64)
 
 #add_library(VortexOS $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs>)
