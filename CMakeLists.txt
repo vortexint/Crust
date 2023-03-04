@@ -7,8 +7,7 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 set(src ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(PUBLIC
-    ${CMAKE_SOURCE_DIR}/extern
-    ${src}/std
+    ${CMAKE_SOURCE_DIR}/include
 )
 
 project(vortexOS LANGUAGES C ASM ASM_NASM) # ASM is required by piclibc
@@ -27,6 +26,10 @@ target_sources(c_objs PUBLIC
     ${src}/bda/bda_utils.c
 )
 
+target_compile_options(c_objs PRIVATE -m64 -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore)
+target_link_libraries(c_objs PRIVATE Picolibc)
+# target_precompile_headers(c_objs PRIVATE ${CMAKE_SOURCE_DIR}/include/stdafx.h) < This should be ideal but causes strange issues to identify right now.
+
 target_sources(asm_objs PUBLIC
 # Assembly (nasm)
     ${src}/platform/x86_64/boot.asm
@@ -34,8 +37,6 @@ target_sources(asm_objs PUBLIC
     ${src}/platform/x86_64/multiboot-header.asm
 )
 
-target_compile_options(c_objs PRIVATE -m64 -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore)
-target_link_libraries(c_objs PRIVATE Picolibc)
 target_compile_options(asm_objs PRIVATE -f elf64)
 
 #add_library(VortexOS $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs>)

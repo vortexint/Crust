@@ -1,7 +1,8 @@
-#include <stdbool.h>
+#include "stdafx.h"
 #include "graphics/vga_text.h"
 #include "bda/bda_utils.h"
 #include "compile_time.h"
+
 #define STR(x) #x
 static bool vga_output = true;
 
@@ -12,6 +13,7 @@ void c_main() {
     writer.buffer = (Buffer*) 0xb8000;
     writer.color_code = ColorCode_new(Yellow, Black);
     writer.column_position = 0;
+    
     write_string(&writer, "Welcome to ");
     writer.color_code = ColorCode_new(Green, Black);
     write_string(&writer, "Vortex OS");
