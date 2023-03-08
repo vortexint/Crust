@@ -10,7 +10,7 @@ include_directories(PUBLIC
     ${CMAKE_SOURCE_DIR}/include
 )
 
-project(vortexOS LANGUAGES C ASM ASM_NASM) # ASM is required by piclibc
+project(vortexOS LANGUAGES C ASM ASM_NASM) # ASM is required by picplibc
 
 #add_subdirectory(modules/Lua)
 add_subdirectory(modules/picolibc)
