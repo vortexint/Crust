@@ -1,14 +1,14 @@
-# Vortex OS
+# Crust
 
-A memory-safe operating system built to maximize the potential of modern computing. Taking advantage of the Rust programming language and its associated ecosystem, Vortex OS is designed to be flexible and customizable from the ground up.
+A memory-safe operating system built to maximize the potential of modern computing. Taking advantage of the Rust programming language and its associated ecosystem, Crust is designed to be flexible and customizable from the ground up.
 
-The project is implemented as a library, which can be linked with assembly source to produce a final kernel binary. The binary is then packed with the [GRUB 2 bootloader](https://www.gnu.org/software/grub/), allowing Vortex OS to be compatible with multiple boot environments; This design choice allows for flexibility and customization in the development process.
+The project is implemented as a library, which can be linked with assembly source to produce a final kernel binary. The binary is then packed with the [GRUB 2 bootloader](https://www.gnu.org/software/grub/), allowing Crust to be compatible with multiple boot environments; This design choice allows for flexibility and customization in the development process.
 
 # Rundown
 
 ## 1. Hacking Rust
 
-At the heart of Vortex OS lies a unique approach to using multiple languages in combination with Rust. To make the most out of the language, Vortex OS requires the use of the nightly version of Rust.
+At the heart of Crust lies a unique approach to using multiple languages in combination with Rust. To make the most out of the language, Crust requires the use of the nightly version of Rust.
 
 ### 1.1 The x86_64-unknown-none LLVM target
 

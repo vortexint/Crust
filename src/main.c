@@ -16,7 +16,7 @@ void c_main() {
     
     write_string(&writer, "Welcome to ");
     writer.color_code = ColorCode_new(Green, Black);
-    write_string(&writer, "Vortex OS");
+    write_string(&writer, "Crust");
     writer.color_code = ColorCode_new(Yellow, Black);
     write_string(&writer, "!");
     writer.color_code = ColorCode_new(White, Black);

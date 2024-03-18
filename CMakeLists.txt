@@ -10,7 +10,7 @@ include_directories(PUBLIC
     ${CMAKE_SOURCE_DIR}/include
 )
 
-project(vortexOS LANGUAGES C ASM ASM_NASM) # ASM is required by picolibc
+project(Crust LANGUAGES C ASM ASM_NASM) # ASM is required by picolibc
 
 #add_subdirectory(modules/Lua)
 add_subdirectory(modules/picolibc)
@@ -39,22 +39,22 @@ target_sources(asm_objs PUBLIC
 
 target_compile_options(asm_objs PRIVATE -f elf64)
 
-#add_library(VortexOS $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs>)
+#add_library(Crust $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs>)
 # I Wish! We cannot specify build flags for ld here so a custom build step is required.
 
-add_custom_target(VortexOS ALL
+add_custom_target(Crust ALL
     COMMAND cargo build
-    COMMAND ld -n --gc-sections -T ${src}/platform/x86_64/link.ld -o ${CMAKE_BINARY_DIR}/VortexOS.bin $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs> ${CMAKE_BINARY_DIR}/x86_64/debug/libvortex_os_rust.a
+    COMMAND ld -n --gc-sections -T ${src}/platform/x86_64/link.ld -o ${CMAKE_BINARY_DIR}/Crust.bin $<TARGET_OBJECTS:c_objs> $<TARGET_OBJECTS:asm_objs> ${CMAKE_BINARY_DIR}/x86_64/debug/libcrust.a
     COMMAND mkdir -p ${CMAKE_BINARY_DIR}/isofiles/boot/grub
-    COMMAND cp ${CMAKE_BINARY_DIR}/VortexOS.bin ${CMAKE_BINARY_DIR}/isofiles/boot/VortexOS.bin
+    COMMAND cp ${CMAKE_BINARY_DIR}/Crust.bin ${CMAKE_BINARY_DIR}/isofiles/boot/Crust.bin
     COMMAND cp -a ${src}/platform/grub/. ${CMAKE_BINARY_DIR}/isofiles/boot/grub
-    COMMAND grub-mkrescue --output=${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso ${CMAKE_BINARY_DIR}/isofiles
+    COMMAND grub-mkrescue --output=${CMAKE_BINARY_DIR}/Crust_x86_64.iso ${CMAKE_BINARY_DIR}/isofiles
     COMMAND rm -rf ${CMAKE_BINARY_DIR}/isofiles/
-    COMMAND rm -f ${CMAKE_BINARY_DIR}/VortexOS.bin
+    COMMAND rm -f ${CMAKE_BINARY_DIR}/Crust.bin
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS c_objs asm_objs
-    BYPRODUCTS ${CMAKE_BINARY_DIR}/VortexOS_x86_64.iso
-    COMMENT "Full VortexOS kernel target"
+    BYPRODUCTS ${CMAKE_BINARY_DIR}/Crust_x86_64.iso
+    COMMENT "Full Crust kernel target"
     COMMAND_EXPAND_LISTS
     VERBATIM
 )
